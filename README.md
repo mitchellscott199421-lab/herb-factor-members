@@ -1,6 +1,6 @@
 # The Herb Factor — UDC 2027 members site
 
-Password-protected information site for The Herb Factor slot members. It covers the Ultimate Driver Championship 2027 at Albion Park, Brisbane, run by Racing Queensland.
+Password-protected information site for The Herb Factor slot members. It covers the Ultimate Driver Championship 2027 at Albion Park, Brisbane.
 
 About 100 people share one login. The site is a single mobile-first page: intro, concept, cost and sign up, prizemoney, key dates, accommodation, sponsors and contact. There is no database.
 
@@ -26,7 +26,7 @@ Leave `NODE_ENV` unset, or set it to `development`, on your own machine. `NODE_E
 | `MEMBER_USERNAME` | Yes | Shared members username. Matched exactly, apart from spaces trimmed around it. |
 | `MEMBER_PASSWORD` | Yes | Shared members password. Matched exactly. |
 | `SESSION_SECRET` | Yes | Signs the session cookie. At least 16 characters, longer is better. |
-| `SIGNUP_URL` | No | Where **Register now** goes. If the variable is unset, it defaults to `https://ultimate-driver-form.onrender.com`. If it is set but empty, the cost section shows “Link coming soon” and the deck line about Racing Queensland sharing the link. |
+| `SIGNUP_URL` | No | Where **Register now** goes. If the variable is unset, it defaults to `https://ultimate-driver-form.onrender.com`. If it is set but empty, the cost section shows “Link coming soon. I'll share this link when it's available.” |
 | `PORT` | No | Port to listen on. Render sets this. Local default is `3000`. |
 | `NODE_ENV` | No | Set to `production` on Render so the cookie is Secure and the app trusts the Render proxy. |
 

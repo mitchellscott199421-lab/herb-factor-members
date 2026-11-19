@@ -81,6 +81,8 @@ describe('members site', { concurrency: 1 }, () => {
 
   test('wrong password is rejected and does not open the site', async () => {
     const page = await loginPage();
+    assert.equal(page.html.includes('Racing Queensland'), false);
+    assert.match(page.html, /Albion Park, Brisbane/);
     const res = await postLogin(page.cookie, page.token, 'slotmember', 'nope');
     assert.equal(res.status, 401);
     const html = await res.text();
@@ -120,7 +122,8 @@ describe('members site', { concurrency: 1 }, () => {
     for (const phrase of [
       'Hi Everyone',
       'back-to-back UDC titles in February 2027',
-      'Ryan &amp; James',
+      'Ryan Spice',
+      'Ryan, James and a select team',
       '100',
       'Slot members',
       '$500 per member',
@@ -165,6 +168,8 @@ describe('members site', { concurrency: 1 }, () => {
     assert.equal(html.includes('CONEPT'), false);
     assert.equal(html.includes('per members'), false);
     assert.equal(/\bBallart\b/.test(html), false);
+    assert.equal(html.includes('Racing Queensland'), false);
+    assert.equal(html.includes('Ryan &amp; James'), false);
 
     const photo = await fetch(`${base}/media/team.jpg`, { headers: { cookie: session } });
     assert.equal(photo.status, 200);
@@ -199,7 +204,8 @@ describe('members site', { concurrency: 1 }, () => {
       const home = await fetch(`${base}/`, { headers: { cookie: session } });
       const html = await home.text();
       assert.match(html, /Link coming soon/);
-      assert.match(html, /Ryan will share this link when Racing Queensland have made it available/);
+      assert.match(html, /I'll share this link when it's available/);
+      assert.equal(html.includes('Racing Queensland'), false);
       assert.equal(html.includes('Register now'), false);
       assert.equal(html.includes('ultimate-driver-form.onrender.com'), false);
     } finally {
