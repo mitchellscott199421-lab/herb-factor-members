@@ -1,0 +1,22 @@
+# Render Blueprint: free Web Service for The Herb Factor members site.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: herb-factor-members
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MEMBER_USERNAME
+        sync: false
+      - key: MEMBER_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SIGNUP_URL
+        value: https://ultimate-driver-form.onrender.com
