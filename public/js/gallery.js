@@ -5,13 +5,12 @@
   var dialog = root.querySelector('.lightbox-dialog');
   var stage = document.getElementById('lightbox-stage');
   var img = document.getElementById('lightbox-img');
-  var caption = document.getElementById('lightbox-caption');
   var count = document.getElementById('lightbox-count');
   var closeBtn = document.getElementById('lightbox-close');
   var prevBtn = document.getElementById('lightbox-prev');
   var nextBtn = document.getElementById('lightbox-next');
   var items = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-item]'));
-  if (!dialog || !stage || !img || !caption || !count || !closeBtn || !prevBtn || !nextBtn || !items.length) return;
+  if (!dialog || !stage || !img || !count || !closeBtn || !prevBtn || !nextBtn || !items.length) return;
 
   var index = 0;
   var lastFocus = null;
@@ -27,7 +26,6 @@
     return {
       full: el.getAttribute('data-full'),
       alt: el.getAttribute('data-alt') || '',
-      caption: el.getAttribute('data-caption') || '',
     };
   }
 
@@ -44,7 +42,6 @@
     var label = 'Photo ' + (index + 1) + ' of ' + total + '. ' + data.alt;
     img.src = data.full;
     img.alt = label;
-    caption.textContent = data.caption;
     count.textContent = (index + 1) + ' / ' + total;
     dialog.setAttribute('aria-label', label);
     preload(read(items[(index + 1) % total]).full);

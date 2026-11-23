@@ -83,7 +83,8 @@ describe('members site', { concurrency: 1 }, () => {
   test('wrong password is rejected and does not open the site', async () => {
     const page = await loginPage();
     assert.equal(page.html.includes('Racing Queensland'), false);
-    assert.match(page.html, /Albion Park, Brisbane/);
+    assert.equal(page.html.includes('Albion Park'), false);
+    assert.match(page.html, /Ultimate Driver Championship/);
     const res = await postLogin(page.cookie, page.token, 'slotmember', 'nope');
     assert.equal(res.status, 401);
     const html = await res.text();
@@ -116,7 +117,7 @@ describe('members site', { concurrency: 1 }, () => {
       'Accommodation',
       'Sponsors',
       'Gallery',
-      'Last year',
+      'UDC 2026',
       'Contact',
     ]) {
       assert.ok(html.includes(heading), `missing section ${heading}`);
@@ -173,6 +174,15 @@ describe('members site', { concurrency: 1 }, () => {
     assert.equal(/\bBallart\b/.test(html), false);
     assert.equal(html.includes('Racing Queensland'), false);
     assert.equal(html.includes('Ryan &amp; James'), false);
+    assert.equal(html.includes('2025'), false);
+    assert.equal(html.includes('Albion Park, Brisbane'), false);
+    assert.deepEqual(html.match(/Albion Park/g), [
+      'Albion Park',
+      'Albion Park',
+    ]);
+    assert.ok(html.includes('Albion Park Harness Racing Club'));
+    assert.ok(html.includes('uber to Albion Park'));
+    assert.equal(html.includes('<figcaption'), false);
 
     const photo = await fetch(`${base}/media/team.jpg`, { headers: { cookie: session } });
     assert.equal(photo.status, 200);
@@ -268,8 +278,11 @@ describe('members site', { concurrency: 1 }, () => {
 
     assert.ok(html.includes('href="#gallery"'));
     assert.ok(html.includes('>Gallery<'));
-    assert.ok(html.includes('UDC 2025 winners'));
-    assert.ok(html.includes('See the 2025 win'));
+    assert.ok(html.includes('UDC 2026'));
+    assert.ok(html.includes('See the 2026 win'));
+    assert.equal(html.includes('2025'), false);
+    assert.equal(html.includes('data-caption'), false);
+    assert.equal(html.includes('lightbox-caption'), false);
     assert.ok(html.includes('id="lightbox"'));
     assert.ok(html.includes('/js/gallery.js'));
     assert.ok(html.includes('>Previous<'));
