@@ -1,0 +1,12 @@
+<button type="button" class="<%= item ? 'shot' : 'open-photo' %>" data-photo="<%= photo.id %>"<% if (item) { %> data-gallery-item data-full="<%= photo.web.src %>" data-alt="<%= photo.alt %>" data-caption="<%= photo.caption %>"<% } %> aria-haspopup="dialog">
+  <img
+    src="<%= photo.web.src %>"
+    srcset="<%= photo.thumb.src %> <%= photo.thumb.width %>w, <%= photo.web.src %> <%= photo.web.width %>w"
+    sizes="<%= sizes %>"
+    width="<%= photo.web.width %>"
+    height="<%= photo.web.height %>"
+    alt="<%= photo.alt %>"
+    loading="lazy"
+    decoding="async">
+  <% if (!item) { %><span class="sr-only">Open in the gallery</span><% } %>
+</button>

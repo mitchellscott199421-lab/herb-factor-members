@@ -1,10 +1,22 @@
 const crypto = require('crypto');
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
+const { photos, byId } = require('./gallery');
 
 const ROOT = __dirname;
 const MEDIA_DIR = path.join(ROOT, 'private', 'media');
+const GALLERY_FILE = /^photo-(0[1-9]|1[0-3])\.jpg$/;
+
+for (const photo of photos) {
+  const webFile = path.join(MEDIA_DIR, 'gallery', 'web', `photo-${photo.id}.jpg`);
+  const thumbFile = path.join(MEDIA_DIR, 'gallery', 'thumbs', `photo-${photo.id}.jpg`);
+  if (!fs.existsSync(webFile) || !fs.existsSync(thumbFile)) {
+    console.error(`Missing optimised gallery file for photo-${photo.id}.jpg. Run npm run optimize-gallery.`);
+    process.exit(1);
+  }
+}
 const DEFAULT_SIGNUP_URL = 'https://ultimate-driver-form.onrender.com';
 
 const MEDIA = new Set([
@@ -103,7 +115,7 @@ app.use((req, res, next) => {
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none"
+    "default-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
   );
   next();
 });
@@ -227,6 +239,21 @@ app.post('/logout', (req, res) => {
   });
 });
 
+app.get('/media/gallery/:variant/:file', (req, res) => {
+  if (!req.session || !req.session.authenticated) {
+    return res.status(401).end();
+  }
+  const variant = req.params.variant;
+  const file = req.params.file;
+  if ((variant !== 'web' && variant !== 'thumbs') || !GALLERY_FILE.test(file)) {
+    return res.status(404).end();
+  }
+  res.setHeader('Cache-Control', 'private, max-age=3600');
+  res.sendFile(file, { root: path.join(MEDIA_DIR, 'gallery', variant), dotfiles: 'deny' }, (err) => {
+    if (err && !res.headersSent) res.status(404).end();
+  });
+});
+
 app.get('/media/:name', (req, res) => {
   const name = req.params.name;
   if (!req.session || !req.session.authenticated) {
@@ -246,6 +273,8 @@ app.get('/', requireAuth, (req, res) => {
   res.render('home', {
     csrf: ensureCsrf(req),
     signupUrl: signupUrl(),
+    photos,
+    byId,
   });
 });
 

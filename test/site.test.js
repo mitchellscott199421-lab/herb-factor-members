@@ -52,6 +52,7 @@ describe('members site', { concurrency: 1 }, () => {
     const res = await fetch(`${base}/healthz`);
     assert.equal(res.status, 200);
     assert.equal(await res.text(), 'ok');
+    assert.match(res.headers.get('content-security-policy') || '', /object-src 'none'/);
     const cookies = typeof res.headers.getSetCookie === 'function' ? res.headers.getSetCookie() : [];
     assert.equal(cookies.length, 0);
   });
@@ -114,6 +115,8 @@ describe('members site', { concurrency: 1 }, () => {
       'Key dates / functions',
       'Accommodation',
       'Sponsors',
+      'Gallery',
+      'Last year',
       'Contact',
     ]) {
       assert.ok(html.includes(heading), `missing section ${heading}`);
@@ -212,4 +215,106 @@ describe('members site', { concurrency: 1 }, () => {
       process.env.SIGNUP_URL = 'https://ultimate-driver-form.onrender.com';
     }
   });
+
+  test('gallery photos stay behind the login and are on the page', async () => {
+    const ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'];
+
+    for (const id of ids) {
+      for (const variant of ['web', 'thumbs']) {
+        const hidden = await fetch(`${base}/media/gallery/${variant}/photo-${id}.jpg`, { redirect: 'manual' });
+        assert.equal(hidden.status, 401, `${variant} photo-${id} should require login`);
+      }
+    }
+
+    const original = await fetch(`${base}/media/gallery/photo-01.jpg`, { redirect: 'manual' });
+    assert.notEqual(original.status, 200);
+
+    const page = await loginPage();
+    const res = await postLogin(page.cookie, page.token, 'slotmember', 'correct-horse-battery');
+    const session = cookieHeader(res);
+
+    for (const id of ids) {
+      for (const [variant, limit] of [['web', 1600], ['thumbs', 600]]) {
+        const photo = await fetch(`${base}/media/gallery/${variant}/photo-${id}.jpg`, {
+          headers: { cookie: session },
+        });
+        assert.equal(photo.status, 200, `${variant} photo-${id}`);
+        assert.match(photo.headers.get('content-type'), /image\/jpeg/);
+        assert.match(photo.headers.get('cache-control') || '', /private/);
+        const bytes = Buffer.from(await photo.arrayBuffer());
+        const size = jpegSize(bytes);
+        assert.ok(Math.max(size.width, size.height) <= limit, `${variant} photo-${id} is ${size.width}x${size.height}`);
+        assert.ok(bytes.length > 1000);
+      }
+    }
+
+    const missing = await fetch(`${base}/media/gallery/web/photo-99.jpg`, { headers: { cookie: session } });
+    assert.equal(missing.status, 404);
+
+    const badVariant = await fetch(`${base}/media/gallery/originals/photo-01.jpg`, { headers: { cookie: session } });
+    assert.equal(badVariant.status, 404);
+
+    const sneak = await fetch(`${base}/media/gallery/web/..%2f..%2fpackage.json`, {
+      headers: { cookie: session },
+      redirect: 'manual',
+    });
+    assert.notEqual(sneak.status, 200);
+    const sneakBody = await sneak.text();
+    assert.equal(sneakBody.includes('"herb-factor-members"'), false);
+
+    const home = await fetch(`${base}/`, { headers: { cookie: session } });
+    assert.equal(home.status, 200);
+    const html = await home.text();
+
+    assert.ok(html.includes('href="#gallery"'));
+    assert.ok(html.includes('>Gallery<'));
+    assert.ok(html.includes('UDC 2025 winners'));
+    assert.ok(html.includes('See the 2025 win'));
+    assert.ok(html.includes('id="lightbox"'));
+    assert.ok(html.includes('/js/gallery.js'));
+    assert.ok(html.includes('>Previous<'));
+    assert.ok(html.includes('>Next<'));
+    assert.equal(html.includes('Racing Queensland'), false);
+    assert.equal(/\/media\/gallery\/photo-\d+\.jpg/.test(html), false);
+    assert.equal((html.match(/data-gallery-item/g) || []).length, 13);
+
+    const hero = html.match(/<img[^>]*class="hero-photo"[^>]*>/);
+    assert.ok(hero, 'hero photo should be an image');
+    assert.equal(hero[0].includes('loading="lazy"'), false);
+    assert.ok(hero[0].includes('fetchpriority="high"'));
+    assert.ok(hero[0].includes('/media/gallery/web/photo-11.jpg'));
+    assert.ok((html.match(/loading="lazy"/g) || []).length >= 18);
+
+    for (const id of ids) {
+      assert.ok(html.includes(`/media/gallery/web/photo-${id}.jpg`), `missing web photo ${id}`);
+      assert.ok(html.includes(`/media/gallery/thumbs/photo-${id}.jpg`), `missing thumb ${id}`);
+      assert.ok(html.includes(`data-photo="${id}"`), `missing opener ${id}`);
+    }
+
+    assert.equal((html.match(/data-photo="01"/g) || []).length, 2);
+    assert.equal((html.match(/data-photo="11"/g) || []).length, 1);
+    assert.ok(html.includes('Draft day indoors'));
+    assert.ok(html.includes('Nutrien sales voucher being handed over'));
+    assert.equal(html.includes('Ryan Spice'), true);
+  });
 });
+
+function jpegSize(buf) {
+  let i = 2;
+  while (i < buf.length - 8) {
+    if (buf[i] !== 0xff) {
+      i += 1;
+      continue;
+    }
+    const marker = buf[i + 1];
+    if (marker === 0xc0 || marker === 0xc1 || marker === 0xc2) {
+      return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    }
+    if (marker === 0xd8 || marker === 0xd9 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) {
+      i += 2;
+      continue;
+    }
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  throw new Error('JPEG size marker not found');
+}

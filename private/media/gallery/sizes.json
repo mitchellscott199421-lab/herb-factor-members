@@ -1,0 +1,132 @@
+{
+  "10": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "11": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "12": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "13": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "01": {
+    "web": {
+      "width": 1200,
+      "height": 1600
+    },
+    "thumb": {
+      "width": 450,
+      "height": 600
+    }
+  },
+  "02": {
+    "web": {
+      "width": 740,
+      "height": 1600
+    },
+    "thumb": {
+      "width": 277,
+      "height": 600
+    }
+  },
+  "03": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "04": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "05": {
+    "web": {
+      "width": 1200,
+      "height": 1600
+    },
+    "thumb": {
+      "width": 450,
+      "height": 600
+    }
+  },
+  "06": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "07": {
+    "web": {
+      "width": 1200,
+      "height": 1600
+    },
+    "thumb": {
+      "width": 450,
+      "height": 600
+    }
+  },
+  "08": {
+    "web": {
+      "width": 1600,
+      "height": 1200
+    },
+    "thumb": {
+      "width": 600,
+      "height": 450
+    }
+  },
+  "09": {
+    "web": {
+      "width": 1200,
+      "height": 1600
+    },
+    "thumb": {
+      "width": 450,
+      "height": 600
+    }
+  }
+}
