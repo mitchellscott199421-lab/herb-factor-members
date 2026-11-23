@@ -2,7 +2,7 @@
 
 Password-protected information site for The Herb Factor slot members. It covers the Ultimate Driver Championship 2027 at Albion Park, Brisbane.
 
-About 100 people share one login. The site is a single mobile-first page: intro, concept, cost and sign up, prizemoney, key dates, accommodation, sponsors and contact. There is no database.
+About 100 people share one login. The site is a single mobile-first page: intro, concept, cost and sign up, prizemoney, key dates, accommodation, sponsors, a gallery of the 2025 win, and contact. There is no database.
 
 ## Run locally
 
@@ -40,7 +40,7 @@ The session cookie is `thf.sid`: HttpOnly, SameSite=Lax, and Secure in productio
 - Styles, fonts and the logo (the landing page shows the logo)
 - `GET /robots.txt` asks crawlers not to index the site
 
-Every other page, and the team photo, prizemoney graphic and sponsor logos, require the members session. A wrong username or password returns the same message either way. Eight failures from the same address within 15 minutes are paused.
+Every other page, and the team photo, prizemoney graphic, sponsor logos and UDC 2025 gallery photos, require the members session. Gallery originals in `private/media/gallery/` are not served. The site uses the resized files from `npm run optimize-gallery`: longest edge 1600px in `web/`, and 600px in `thumbs/`. That script needs the `sharp` dev dependency, which production does not install. A wrong username or password returns the same message either way. Eight failures from the same address within 15 minutes are paused.
 
 ## Deploy on Render (free Web Service)
 

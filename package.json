@@ -8,11 +8,15 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "optimize-gallery": "node scripts/optimize-gallery.js"
   },
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
   }
 }
