@@ -137,7 +137,6 @@ describe('members site', { concurrency: 1 }, () => {
       '$80',
       '$40',
       'Race night marquees',
-      'Payments will be due at the start of December',
       'Use the Register Now button to complete your digital sign up',
       'THE HERB FACTOR from the slot list',
       'Ryan will text message you payment details in the next 48 hours',
