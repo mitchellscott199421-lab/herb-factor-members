@@ -111,7 +111,7 @@ describe('members site', { concurrency: 1 }, () => {
     for (const heading of [
       'Intro',
       'Concept',
-      'Cost &amp; sign up',
+      'Digital sign up',
       'Prizemoney',
       'Key dates / functions',
       'Accommodation',
@@ -134,10 +134,13 @@ describe('members site', { concurrency: 1 }, () => {
       'Home Straight Bistro Sportsmans Function',
       '2 x Race Nights',
       '$330',
-      '$70',
+      '$80',
+      '$40',
       'Race night marquees',
       'Payments will be due at the start of December',
-      'digital process instead of manual forms',
+      'Use the Register Now button to complete your digital sign up',
+      'THE HERB FACTOR from the slot list',
+      'Ryan will text message you payment details in the next 48 hours',
       'Register now',
       'https://ultimate-driver-form.onrender.com',
       '$20k + $1k per win',
@@ -152,7 +155,18 @@ describe('members site', { concurrency: 1 }, () => {
       'Friday 19th February',
       'Saturday 20th February',
       'Sunday 21st February',
-      'Rum Bar at the Brekky Creek',
+      'Gourmet Pizzas + Drinks | Rum Bar Brekky Creek',
+      'www.theultimatedriver.com.au',
+      'https://www.theultimatedriver.com.au',
+      'Greg O\'Connor',
+      'Come and find your next superstar! Fingers crossed Slot Members might be able to come together and buy a yearling.',
+      'Every person on track will be a paid up THF Member',
+      'armbands will be provided by the club',
+      'THE HERB FACTOR Slot Member Information',
+      'Hotel Quest Breakfast Creek, Albion, Australia',
+      'https://www.questapartments.com.au/properties/qld/albion/quest-breakfast-creek',
+      'Hotels in Hamilton Brisbane with River Views | View Brisbane',
+      'https://viewhotels.com.au/brisbane/',
       'Quest Breakfast Creek',
       'Portside Hamilton',
       '5 minute',
@@ -176,7 +190,18 @@ describe('members site', { concurrency: 1 }, () => {
     assert.equal(html.includes('Ryan &amp; James'), false);
     assert.equal(html.includes('2025'), false);
     assert.equal(html.includes('Albion Park, Brisbane'), false);
+    assert.ok(html.includes('<h2>Cost</h2>'));
+    assert.equal(html.includes('Multiple events over 4 to 5 days. $500 per member.'), false);
+    assert.equal(html.includes('Cost &amp; sign up'), false);
+    assert.match(html, /Race night marquees<\/span><b>\$80<\/b>/);
+    assert.match(html, /The Herb Factor Breakfast Creek Function<\/span><b>\$40<\/b>/);
+    assert.match(html, /Total per member<\/span><b>\$500<\/b>/);
+    assert.match(
+      html,
+      /<th scope="col">Place<\/th>\s*<th scope="col">Slot holder<\/th>\s*<th scope="col">Driver<\/th>\s*<th scope="col">Slot manager<\/th>/
+    );
     assert.deepEqual(html.match(/Albion Park/g), [
+      'Albion Park',
       'Albion Park',
       'Albion Park',
     ]);

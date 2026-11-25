@@ -256,7 +256,7 @@ input:focus-visible {
 }
 
 .brand img {
-  height: 52px;
+  height: 58px;
   width: auto;
   max-width: 62vw;
   object-fit: contain;
@@ -271,7 +271,7 @@ input:focus-visible {
   text-transform: uppercase;
   color: var(--gold);
   line-height: 1.05;
-  font-size: 22px;
+  font-size: 25px;
 }
 
 .brand-meta span {
@@ -400,7 +400,7 @@ input:focus-visible {
 
 .lede {
   margin: 0;
-  max-width: 36ch;
+  max-width: 46ch;
   color: #ece7dc;
   font-size: 18px;
 }
@@ -473,13 +473,32 @@ main.wrap { padding: 28px 0 20px; }
 
 .signoff {
   margin-top: 4px;
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
-  font-weight: 700;
-  font-size: 26px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--navy);
 }
+
+.notes {
+  margin: 0 0 16px;
+  padding-left: 1.2em;
+}
+
+.notes li { margin: 0 0 8px; }
+
+.notes li:last-child { margin-bottom: 0; }
+
+.hotels {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.hotels a { font-weight: 600; }
 
 .facts {
   list-style: none;
@@ -621,10 +640,10 @@ main.wrap { padding: 28px 0 20px; }
 .timeline li::before {
   content: "";
   position: absolute;
-  left: -9px;
-  top: 4px;
-  width: 14px;
-  height: 14px;
+  left: -11px;
+  top: 2px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--red);
   border: 2px solid var(--gold);
@@ -830,7 +849,7 @@ footer p { margin: 0; }
 }
 
 @media (min-width: 800px) {
-  .brand img { height: 64px; max-width: none; }
+  .brand img { height: 72px; max-width: none; }
   .brand-meta { display: block; }
   .login-shell { padding-top: 48px; }
   .panel { padding: 36px 36px 40px; }
