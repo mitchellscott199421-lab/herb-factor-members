@@ -28,9 +28,10 @@
     <nav class="nav" aria-label="Sections">
       <a href="#intro" aria-current="true">Intro</a>
       <a href="#concept">Concept</a>
-      <a href="#cost">Cost &amp; sign up</a>
+      <a href="#cost">Cost</a>
       <a href="#prizemoney">Prizemoney</a>
       <a href="#dates">Key dates / functions</a>
+      <a href="#signup">Digital sign up</a>
       <a href="#accommodation">Accommodation</a>
       <a href="#sponsors">Sponsors</a>
       <a href="#gallery">Gallery</a>
@@ -54,7 +55,7 @@
     </div>
     <div class="wrap">
       <h1>Ultimate Driver Championship 2027</h1>
-      <p class="lede">THF slot member information, in one place.</p>
+      <p class="lede">THE HERB FACTOR Slot Member Information</p>
       <a class="hero-link" href="#gallery">See the 2026 win</a>
     </div>
   </section>
@@ -83,8 +84,11 @@
         <li><strong>4 to 5</strong><span>Days of events</span></li>
         <li><strong>$500</strong><span>Per member</span></li>
       </ul>
-      <p>Multiple events over 4 to 5 days. $500 per member.</p>
       <p>One price includes everything – Slot Fee, Merchandise, THF Breakfast Creek Function, Home Straight Bistro Sportsmans Function and 2 x Race Nights.</p>
+      <ul class="notes">
+        <li>Every person on track will be a paid up THF Member</li>
+        <li>All kids welcome at no extra cost – armbands will be provided by the club</li>
+      </ul>
       <div class="frames">
         <figure class="figure frame-wide">
           <img src="/media/team.jpg" width="1600" height="1067" alt="The Herb Factor slot members and driver with the Ultimate Driver Championship trophy" loading="lazy">
@@ -97,28 +101,18 @@
 
     <section class="panel" id="cost">
       <header class="panel-h">
-        <h2>Cost &amp; sign up</h2>
+        <h2>Cost</h2>
       </header>
       <p class="price-line"><strong>$500 per member</strong></p>
       <h3 class="subhead">Cost breakdown</h3>
       <ul class="receipt">
         <li><span>Slot fee</span><b>$330</b></li>
-        <li><span>Race night marquees</span><b>$70</b></li>
+        <li><span>Race night marquees</span><b>$80</b></li>
         <li><span>Merchandise</span><b>$50</b></li>
-        <li><span>The Herb Factor Breakfast Creek Function</span><b>$50</b></li>
+        <li><span>The Herb Factor Breakfast Creek Function</span><b>$40</b></li>
         <li class="total"><span>Total per member</span><b>$500</b></li>
       </ul>
       <p>Payments will be due at the start of December, Ryan will message members directly with details.</p>
-
-      <div class="signup">
-        <h3>Digital sign up</h3>
-        <p>Signing up will be much easier this year with a digital process instead of manual forms.</p>
-        <% if (signupUrl) { %>
-          <a class="button register" href="<%= signupUrl %>" target="_blank" rel="noopener noreferrer">Register now</a>
-        <% } else { %>
-          <p class="soon"><strong>Link coming soon.</strong> I'll share this link when it's available.</p>
-        <% } %>
-      </div>
     </section>
 
     <section class="panel" id="prizemoney">
@@ -132,47 +126,47 @@
           <thead>
             <tr>
               <th scope="col">Place</th>
+              <th scope="col">Slot holder</th>
               <th scope="col">Driver</th>
               <th scope="col">Slot manager</th>
-              <th scope="col">Slot holder</th>
             </tr>
           </thead>
           <tbody>
             <tr class="first">
               <th scope="row">1st place</th>
+              <td data-label="Slot holder">$1k</td>
               <td data-label="Driver">$20k + $1k per win</td>
               <td data-label="Slot manager">$5k</td>
-              <td data-label="Slot holder">$1k</td>
             </tr>
             <tr>
               <th scope="row">2nd place</th>
+              <td data-label="Slot holder">$550</td>
               <td data-label="Driver">$12.5k + $1k per win</td>
               <td data-label="Slot manager">$2.5k</td>
-              <td data-label="Slot holder">$550</td>
             </tr>
             <tr>
               <th scope="row">3rd place</th>
+              <td data-label="Slot holder">$320</td>
               <td data-label="Driver">$10.5k + $1k per win</td>
               <td data-label="Slot manager">$2.5k</td>
-              <td data-label="Slot holder">$320</td>
             </tr>
             <tr>
               <th scope="row">4th place</th>
+              <td data-label="Slot holder">$200</td>
               <td data-label="Driver">$7.5k + $1k per win</td>
               <td data-label="Slot manager">$2.5k</td>
-              <td data-label="Slot holder">$200</td>
             </tr>
             <tr>
               <th scope="row">5th place</th>
+              <td data-label="Slot holder">$100</td>
               <td data-label="Driver">$7.5k + $1k per win</td>
               <td data-label="Slot manager">$2.5k</td>
-              <td data-label="Slot holder">$100</td>
             </tr>
             <tr>
               <th scope="row">6th to 10th place</th>
+              <td data-label="Slot holder">$0</td>
               <td data-label="Driver">$7.5k + $1k per win</td>
               <td data-label="Slot manager">$2.5k</td>
-              <td data-label="Slot holder">$0</td>
             </tr>
           </tbody>
         </table>
@@ -201,6 +195,7 @@
           <p class="when">Wednesday 17th February · 12pm</p>
           <h3>Draft day</h3>
           <p>Ryan, James and a select team will attend the Draft to choose our 20 runners for the 2 race nights.</p>
+          <p>Tune into the livestream that will be available on the UDC website: <a href="https://www.theultimatedriver.com.au" target="_blank" rel="noopener noreferrer">www.theultimatedriver.com.au</a></p>
           <figure class="figure inset-photo">
             <%- include('photo', { photo: byId['05'], sizes: '(min-width: 800px) 440px, 92vw', item: false }) %>
           </figure>
@@ -208,14 +203,16 @@
         <li>
           <p class="when">Thursday 18th February · 12pm to 2pm</p>
           <h3>The Herb Factor Breakfast Creek Function</h3>
-          <p>Canapes and drinks are planned for the Rum Bar at the Brekky Creek.</p>
-          <p>Come and meet Herbie, Slot Members and Sponsors as we discuss the Draft and tactics for the weekend.</p>
-          <p>THF Merchandise will be distributed.</p>
+          <p>Gourmet Pizzas + Drinks | Rum Bar Brekky Creek</p>
+          <p>Come and meet fellow slot holders, Herbie, Ryan and Sponsors.</p>
+          <p>We will do a deep dive into our Draft and discuss the strengths and weaknesses of our selected runners.</p>
+          <p>All THE HERB FACTOR Merchandise will be distributed at the lunch.</p>
         </li>
         <li>
           <p class="when">Thursday 18th February · 5pm to 7pm</p>
           <h3>Ultimate Driver Function &amp; Charity Auction</h3>
-          <p>This function will be held in The Home Straight Bistro, everyone is welcome.</p>
+          <p>This function will be held in The Home Straight Bistro, Albion Park, everyone is welcome.</p>
+          <p>Greg O'Connor will interview drivers and have a chat to key players, finger food normally provided and the bar will be open. Each Slot will have provided an item for the Charity Auction to conclude the night.</p>
         </li>
         <li>
           <p class="when">Friday 19th February · 5pm to late</p>
@@ -233,16 +230,32 @@
         <li>
           <p class="when">Sunday 21st February</p>
           <h3>Sunshine Stars Yearling Sale</h3>
-          <p>Come and find your next superstar, fingers crossed slot members might be able to elect to roll their collect over into a pony.</p>
+          <p>Come and find your next superstar! Fingers crossed Slot Members might be able to come together and buy a yearling.</p>
         </li>
       </ol>
+    </section>
+
+    <section class="panel" id="signup">
+      <header class="panel-h">
+        <h2>Digital sign up</h2>
+      </header>
+      <% if (signupUrl) { %>
+        <p>Use the Register Now button to complete your digital sign up, choose THE HERB FACTOR from the slot list and provide your identification. If you are registering multiple family members please complete the process for each person individually. Once the registration process has been completed, Ryan will text message you payment details in the next 48 hours.</p>
+        <a class="button register" href="<%= signupUrl %>" target="_blank" rel="noopener noreferrer">Register now</a>
+      <% } else { %>
+        <p class="soon"><strong>Link coming soon.</strong> I'll share this link when it's available.</p>
+      <% } %>
     </section>
 
     <section class="panel" id="accommodation">
       <header class="panel-h">
         <h2>Accommodation</h2>
       </header>
-      <p>Suggest to book very early if you plan on staying at <strong>Quest Breakfast Creek</strong> or <strong>View</strong>.</p>
+      <p>Suggest to book very early if you plan on staying at <a href="https://www.questapartments.com.au/properties/qld/albion/quest-breakfast-creek" target="_blank" rel="noopener noreferrer"><strong>Quest Breakfast Creek</strong></a> or <a href="https://viewhotels.com.au/brisbane/" target="_blank" rel="noopener noreferrer"><strong>View</strong></a>.</p>
+      <ul class="hotels">
+        <li><a href="https://www.questapartments.com.au/properties/qld/albion/quest-breakfast-creek" target="_blank" rel="noopener noreferrer">Hotel Quest Breakfast Creek, Albion, Australia</a></li>
+        <li><a href="https://viewhotels.com.au/brisbane/" target="_blank" rel="noopener noreferrer">Hotels in Hamilton Brisbane with River Views | View Brisbane</a></li>
+      </ul>
       <p>Discount codes will be provided by Albion Park Harness Racing Club at some point for these two venues, but there is the very real possibility they may be close to full already.</p>
       <p>Personally, I have enjoyed staying at <strong>Portside Hamilton</strong> in short stay accommodation. It is just a 5 minute drive / uber to Albion Park but you have access to many restaurants and cafes right on the Brisbane River.</p>
     </section>
